@@ -1,120 +1,766 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <style>
-         @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap");
-         * {
-         padding: 0;
-         margin: 0;
-         box-sizing: border-box;
-         }
-         body {
-         background: #222;
-         height: 100vh;
-         display: grid;
-         place-items: center;
-         font-family: Montserrat;
-         color: #b3afbf;
-         }
-         .card {
-         padding: 15px;
-         width: 350px;
-         background: #222;
-         border-radius: 5px;
-         text-align: center;
-         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
-         user-select: none;
-         }
-         .cover-photo {
-         position: relative;
-         background: url(https://i.imgur.com/9DYopo1.png);
-         background-size: cover;
-         height: 180px;
-         border-radius: 5px 5px 0 0;
-         }
-         .profile {
-         position: absolute;
-         width: 120px;
-         bottom: -60px;
-         left: 15px;
-         border-radius: 50%;
-         border: 2px solid #222;
-         background: #222;
-         padding: 5px;
-         }
-         .profile-name {
-         font-size: 20px;
-         margin: 25px 0 0 120px;
-         color: #fff;
-         }
-         .about {
-         margin-top: 30px;
-         line-height: 1.6;
-         }
-         .btn {
-         margin: 30px 15px;
-         background: #7ce3ff;
-         padding: 10px 25px;
-         border-radius: 3px;
-         border: 1px solid #7ce3ff;
-         font-weight: bold;
-         font-family: Montserrat;
-         cursor: pointer;
-         color: #222;
-         transition: 0.2s;
-         }
-         .btn:last-of-type {
-         background: transparent;
-         border-color: #7ce3ff;
-         color: #7ce3ff;
-         }
-         .btn:hover {
-         background: #7ce3ff;
-         color: #222;
-         }
-         .icons {
-         width: 180px;
-         margin: 0 auto 10px;
-         display: flex;
-         justify-content: space-between;
-         gap: 15px;
-         }
-         .icons i {
-         cursor: pointer;
-         padding: 5px;
-         font-size: 18px;
-         transition: 0.2s;
-         }
-         .icons i:hover {
-         color: #7ce3ff;
-         }
-      </style>
-   </head>
-   <body>
-      <div class="card">
-         <div class="cover-photo">
-            <img src="https://i.imgur.com/K7AWCct.png" class="profile">
-         </div>
-         <h3 class="profile-name">Dang Chung</h3>
-         <p class="about">Vietnamese developer 👨‍💻</p>
-         <button class="btn" id="messageButton">Contact</button>
-         <button class="btn" id="followingButton">Phone</button>
-         <div class="icons">
-            <i class="fa-brands fa-linkedin"></i>
-            <i class="fa-brands fa-github"></i>
-            <i class="fa-brands fa-youtube"></i>
-            <i class="fa-brands fa-twitter"></i>
-         </div>
-      </div>
-   </body>
-   <script>
-      document.getElementById('messageButton').addEventListener('click', function() {
-        window.location.href = 'mailto:contact.dinhchung@gmail.com';
-      });
-      document.getElementById('followingButton').addEventListener('click', function() {
-        window.location.href = 'tel:+84349978666';
-      });
-   </script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Nunito");
+
+        :root {
+            font-family: "Nunito", sans-serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .label {
+            color: #d99c3b;
+        }
+
+        @keyframes moveBg {
+            0% {
+                background-position: 0% 30%;
+            }
+
+            100% {
+                background-position: 1000% 500%;
+            }
+        }
+
+        .middle {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            user-select: none;
+        }
+
+        .time {
+            color: #d99c3b;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+        }
+
+        .time span {
+            padding: 0 14px;
+            font-size: 1.2rem;
+        }
+
+        .time span div {
+            font-size: 3rem;
+        }
+
+        @media (max-width: 740px) {
+            .middle h1.label {
+                font-size: 18px !important;
+            }
+
+            .label {
+                font-size: 1.7rem;
+            }
+
+            .content {
+                height: 480px !important;
+            }
+
+            .time span {
+                padding: 0 16px;
+                font-size: 1.2rem;
+            }
+
+            .time span div {
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+
+        body {
+            background-color: #f0ead2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            position: fixed;
+        }
+
+        .content {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .track {
+            position: absolute;
+            width: 400px;
+            height: 5px;
+            background-color: #333;
+            top: 300px;
+        }
+
+        .track:before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 5px;
+            background-color: #333;
+            top: 4px;
+            box-shadow: 20px 0 #333, -20px 0 #333, -40px 0 #333, -60px 0 #333, -80px 0 #333, 40px 0 #333, 60px 0 #333, 80px 0 #333, 100px 0 #333, 120px 0 #333, 140px 0 #333, 160px 0 #333, 180px 0 #333, 200px 0 #333, 220px 0 #333, 240px 0 #333, 260px 0 #333, 280px 0 #333, 300px 0 #333, 320px 0 #333, 340px 0 #333, 360px 0 #333, 380px 0 #333, 400px 0 #333, 420px 0 #333, 440px 0 #333, -100px 0 #333, -120px 0 #333, -140px 0 #333, 460px 0 #333, 480px 0 #333;
+            animation: move 1s linear infinite reverse;
+        }
+
+        @keyframes move {
+            from {
+                left: -100px;
+            }
+
+            to {
+                left: 100px;
+            }
+        }
+
+        .train {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            border: 5px solid #333;
+            background-color: #9e2a2b;
+            border-radius: 0 10px 0 0;
+            top: 230px;
+            left: 285px;
+            animation: scale 1s linear infinite;
+        }
+
+        @keyframes scale {
+            0% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(0.99);
+            }
+
+            100% {
+                transform: scaleY(1);
+            }
+        }
+
+        .train:before {
+            content: "";
+            position: absolute;
+            border: 5px solid #333;
+            background-color: #335c67;
+            width: 35px;
+            height: 60px;
+            left: -45px;
+            top: -35px;
+        }
+
+        .train:after {
+            position: absolute;
+            content: "";
+            width: 100px;
+            height: 5px;
+            border-radius: 10px;
+            border: 5px solid #333;
+            background-color: #fff3b0;
+            top: 30px;
+            left: -50px;
+        }
+
+        .front {
+            position: absolute;
+            border: 5px solid #333;
+            background-color: #aed9e0;
+            box-shadow: inset 2px -5px rgba(255, 255, 255, 0.3);
+            width: 20px;
+            height: 30px;
+            left: -37.5px;
+            top: -20px;
+        }
+
+        .front:before {
+            content: "";
+            position: absolute;
+            background-color: #333;
+            width: 15px;
+            height: 5px;
+            border-radius: 10px;
+            top: 25px;
+            left: 70px;
+            box-shadow: 0px 10px #333, -50px -45px #333, -86px -45px #333, -22px -41px #333, -11px -41px #333;
+        }
+
+        .front:after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            border: 5px solid #333;
+            left: 50px;
+            top: -16px;
+            background-color: #adb5bd;
+        }
+
+        .wheels {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .smallOne,
+        .smallTwo,
+        .smallThree,
+        .smallFour,
+        .smallFive,
+        .smallSix {
+            position: absolute;
+            border: 5px solid #333;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            top: 40px;
+            background-color: #e09f3e;
+            box-shadow: inset 2px 2px white;
+            z-index: 2;
+        }
+
+        .smallOne {
+            left: 30px;
+            animation: spin .5s infinite linear;
+        }
+
+        .smallTwo {
+            left: 0;
+            animation: spin .5s infinite linear;
+        }
+
+        .smallThree {
+            left: -225px;
+            animation: spin .5s infinite linear;
+        }
+
+        .smallFour {
+            left: -190px;
+            animation: spin .5s infinite linear;
+        }
+
+        .smallFive {
+            left: -130px;
+            animation: spin .5s infinite linear;
+        }
+
+        .smallSix {
+            left: -95px;
+            animation: spin .5s infinite linear;
+        }
+
+        .big {
+            position: absolute;
+            border: 5px solid #333;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            background-color: #e09f3e;
+            box-shadow: inset 2px 2px white;
+            top: 30px;
+            left: -40px;
+            animation: spin .5s infinite linear;
+        }
+
+        .cord {
+            position: absolute;
+            width: 10px;
+            height: 5px;
+            background-color: #333;
+            top: 35px;
+            left: -59px;
+            z-index: 3;
+        }
+
+        .cord:before {
+            content: "";
+            position: absolute;
+            height: 5px;
+            width: 70px;
+            background-color: #333;
+            top: 15px;
+            left: 35px;
+        }
+
+        .cord:after {
+            content: "";
+            position: absolute;
+            background-color: #333;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            top: 5px;
+            left: 29px;
+        }
+
+        .coach {
+            position: absolute;
+            width: 80px;
+            height: 60px;
+            border: 5px solid #333;
+            background-color: #9e2a2b;
+            left: -145px;
+            top: -20px;
+        }
+
+        .coach:before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 5px;
+            background-color: #333;
+            top: 50px;
+            left: -15px;
+        }
+
+        .coach:after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 60px;
+            border: 5px solid #333;
+            background-color: #335c67;
+            top: -5px;
+            left: -100px;
+        }
+
+        .coachTwo {
+            position: absolute;
+            border: 5px solid #333;
+            background-color: #aed9e0;
+            box-shadow: inset 2px -5px rgba(255, 255, 255, 0.3);
+            width: 15px;
+            height: 25px;
+            left: -225px;
+            top: -5px;
+        }
+
+        .coachTwo:before,
+        .coachTwo:after {
+            content: "";
+            position: absolute;
+            border: 5px solid #333;
+            background-color: #aed9e0;
+            box-shadow: inset 2px -5px rgba(255, 255, 255, 0.3);
+            width: 15px;
+            height: 25px;
+            top: -5px;
+        }
+
+        .coachTwo:before {
+            left: 30px;
+        }
+
+        .coachTwo:after {
+            left: 90px;
+        }
+
+        .windows {
+            position: absolute;
+            border: 5px solid #333;
+            background-color: #aed9e0;
+            box-shadow: inset 2px -5px rgba(255, 255, 255, 0.3);
+            width: 15px;
+            height: 25px;
+            left: -95px;
+            top: -5px;
+            z-index: 6;
+        }
+
+        .windows:before {
+            content: "";
+            position: absolute;
+            background-color: #333;
+            height: 5px;
+            width: 95px;
+            border-radius: 10px;
+            top: -20px;
+            left: -153px;
+            box-shadow: 95px 0px #333;
+        }
+
+        .windows:after {
+            content: "";
+            position: absolute;
+            background-color: #333;
+            height: 5px;
+            width: 40px;
+            top: 51px;
+            left: -125px;
+            box-shadow: 95px 0 #333;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #up {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            top: -30px;
+            left: 25.5px;
+            z-index: -1;
+        }
+
+        .steam {
+            animation: up 2.5s ease-out infinite;
+        }
+
+        .steam2 {
+            animation: up 1.7s ease-out infinite 1s;
+        }
+
+        .steam2:before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border-radius: 50%;
+            top: 20px;
+        }
+
+        @keyframes up {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110px) translateX(-80px) scale(1.5);
+                opacity: 0.2;
+            }
+        }
+
+        .loading:after {
+            content: "...";
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            animation: ellipsis-dot 1s infinite .3s;
+            animation-fill-mode: forwards;
+            width: 0.9em;
+        }
+
+        @keyframes ellipsis-dot {
+            25% {
+                content: "";
+            }
+            50% {
+                content: ".";
+            }
+            75% {
+                content: "..";
+            }
+            100% {
+                content: "...";
+            }
+        }
+
+
+    </style>
+    <title>Đếm ngược năm mới 2025</title>
+</head>
+<!-- Đặng Đình Chung -->
+
+<body>
+
+    <canvas id="birthday"></canvas>
+
+    <div class="middle">
+        <h1 class="label" style="font-size: 40px;">NEW YEAR COUNT DOWN 2025 <span class="loading"></span>
+        </h1>
+        <div class="time">
+            <span>
+                <div id="d">00</div>
+                Ngày
+            </span>
+            <span>
+                <div id="h">00</div>
+                Giờ
+            </span>
+            <span>
+                <div id="m">00</div>
+                Phút
+            </span>
+            <span>
+                <div id="s">00</div>
+                Giây
+            </span>
+        </div>
+    </div>
+    <script>
+
+            // helper functions
+const PI2 = Math.PI * 2
+const random = (min, max) => Math.random() * (max - min + 1) + min | 0
+const timestamp = _ => new Date().getTime()
+
+// container
+class Birthday {
+  constructor() {
+    this.resize()
+
+    // create a lovely place to store the firework
+    this.fireworks = []
+    this.counter = 0
+
+  }
+  
+  resize() {
+    this.width = canvas.width = window.innerWidth
+    let center = this.width / 2 | 0
+    this.spawnA = center - center / 4 | 0
+    this.spawnB = center + center / 4 | 0
+    
+    this.height = canvas.height = window.innerHeight
+    this.spawnC = this.height * .1
+    this.spawnD = this.height * .5
+    
+  }
+  
+  onClick(evt) {
+     let x = evt.clientX || evt.touches && evt.touches[0].pageX
+     let y = evt.clientY || evt.touches && evt.touches[0].pageY
+     
+     let count = random(3,5)
+     for(let i = 0; i < count; i++) this.fireworks.push(new Firework(
+        random(this.spawnA, this.spawnB),
+        this.height,
+        x,
+        y,
+        random(0, 260),
+        random(30, 110)))
+          
+     this.counter = -1
+     
+  }
+  
+  update(delta) {
+    ctx.globalCompositeOperation = 'hard-light'
+    ctx.fillStyle = `rgba(20,20,20,${ 7 * delta })`
+    ctx.fillRect(0, 0, this.width, this.height)
+
+    ctx.globalCompositeOperation = 'lighter'
+    for (let firework of this.fireworks) firework.update(delta)
+
+    // if enough time passed... create new new firework
+    this.counter += delta * 3 // each second
+    if (this.counter >= 1) {
+      this.fireworks.push(new Firework(
+        random(this.spawnA, this.spawnB),
+        this.height,
+        random(0, this.width),
+        random(this.spawnC, this.spawnD),
+        random(0, 360),
+        random(30, 110)))
+      this.counter = 0
+    }
+
+    // remove the dead fireworks
+    if (this.fireworks.length > 1000) this.fireworks = this.fireworks.filter(firework => !firework.dead)
+
+  }
+}
+
+class Firework {
+  constructor(x, y, targetX, targetY, shade, offsprings) {
+    this.dead = false
+    this.offsprings = offsprings
+
+    this.x = x
+    this.y = y
+    this.targetX = targetX
+    this.targetY = targetY
+
+    this.shade = shade
+    this.history = []
+  }
+  update(delta) {
+    if (this.dead) return
+
+    let xDiff = this.targetX - this.x
+    let yDiff = this.targetY - this.y
+    if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) { // is still moving
+      this.x += xDiff * 2 * delta
+      this.y += yDiff * 2 * delta
+
+      this.history.push({
+        x: this.x,
+        y: this.y
+      })
+
+      if (this.history.length > 20) this.history.shift()
+
+    } else {
+      if (this.offsprings && !this.madeChilds) {
+        
+        let babies = this.offsprings / 2
+        for (let i = 0; i < babies; i++) {
+          let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies) | 0
+          let targetY = this.y + this.offsprings * Math.sin(PI2 * i / babies) | 0
+
+          birthday.fireworks.push(new Firework(this.x, this.y, targetX, targetY, this.shade, 0))
+
+        }
+
+      }
+      this.madeChilds = true
+      this.history.shift()
+    }
+    
+    if (this.history.length === 0) this.dead = true
+    else if (this.offsprings) { 
+        for (let i = 0; this.history.length > i; i++) {
+          let point = this.history[i]
+          ctx.beginPath()
+          ctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)'
+          ctx.arc(point.x, point.y, 1, 0, PI2, false)
+          ctx.fill()
+        } 
+      } else {
+      ctx.beginPath()
+      ctx.fillStyle = 'hsl(' + this.shade + ',100%,50%)'
+      ctx.arc(this.x, this.y, 1, 0, PI2, false)
+      ctx.fill()
+    }
+
+  }
+}
+
+let canvas = document.getElementById('birthday')
+let ctx = canvas.getContext('2d')
+
+let then = timestamp()
+
+let birthday = new Birthday
+window.onresize = () => birthday.resize()
+document.onclick = evt => birthday.onClick(evt)
+document.ontouchstart = evt => birthday.onClick(evt)
+
+  ;(function loop(){
+    requestAnimationFrame(loop)
+
+    let now = timestamp()
+    let delta = now - then
+
+    then = now
+    birthday.update(delta / 1000)
+    
+
+  })()
+
+
+
+
+
+        const d = document.getElementById("d");
+        const h = document.getElementById("h");
+        const m = document.getElementById("m");
+        const s = document.getElementById("s");
+
+        function getTrueNumber(num) {
+            return num < 10 ? "0" + num : num;
+        }
+
+        function calculateRemainingTime() {
+            const comingYear = new Date().getFullYear() + 1;
+            const comingDate = new Date(`Jan 1, ${comingYear} 00:00:00`);
+
+            const now = new Date();
+            // lunar
+            // let endDate = new Date("2025 January 29 00:00:00");
+            let endDate = new Date(2025, 0, 29, 0, 0, 0); // Month is zero-based (0 for January, 1 for February)
+            // let endTime = endDate.getTime();
+            // const remainingTime = comingDate.getTime() - now.getTime();
+            const remainingTime = endDate.getTime() - now.getTime();
+            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const mins = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            d.innerHTML = getTrueNumber(days);
+            h.innerHTML = getTrueNumber(hours);
+            m.innerHTML = getTrueNumber(mins);
+            s.innerHTML = getTrueNumber(secs);
+
+            return remainingTime;
+        }
+
+        function initCountdown() {
+            const interval = setInterval(() => {
+                const remainingTimeInMs = calculateRemainingTime();
+
+                if (remainingTimeInMs <= 1000) {
+                    clearInterval(interval);
+                    initCountdown();
+                }
+            }, 1000);
+        }
+
+        initCountdown();
+
+    </script>
+    <div class="container">
+        <div class="content">
+            <div class="track"></div>
+            <div class="train">
+                <div class="front"></div>
+                <div class="wheels">
+                    <div class="smallOne"></div>
+                    <div class="smallTwo"></div>
+                    <div class="smallThree"></div>
+                    <div class="smallFour"></div>
+                    <div class="smallFive"></div>
+                    <div class="smallSix"></div>
+                    <div class="big"></div>
+                </div>
+                <div class="cord"></div>
+                <div class="coach"></div>
+                <div class="coachTwo"></div>
+                <div class="windows"></div>
+
+                <div id="up" class="steam"></div>
+                <div id="up" class="steam2"></div>
+                <div id="up" class="steam3"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
