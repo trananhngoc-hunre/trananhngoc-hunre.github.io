@@ -697,30 +697,26 @@ document.ontouchstart = evt => birthday.onClick(evt)
         }
 
         function calculateRemainingTime() {
-            const comingYear = new Date().getFullYear() + 1;
-            const comingDate = new Date(`Jan 1, ${comingYear} 00:00:00`);
-
             const now = new Date();
-            // lunar
-            // let endDate = new Date("2025 January 29 00:00:00");
-            let endDate = new Date(2025, 0, 29, 0, 0, 0); // Month is zero-based (0 for January, 1 for February)
-            // let endTime = endDate.getTime();
-            // const remainingTime = comingDate.getTime() - now.getTime();
+            
+            // Cập nhật ngày Tết năm 2026: 17/02/2026 00:00:00
+            let endDate = new Date(2026, 1, 17, 0, 0, 0); // Tháng 1 là tháng 2 (do month bắt đầu từ 0)
+        
             const remainingTime = endDate.getTime() - now.getTime();
+        
             const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-                (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            );
+            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const mins = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
             const secs = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
+        
             d.innerHTML = getTrueNumber(days);
             h.innerHTML = getTrueNumber(hours);
             m.innerHTML = getTrueNumber(mins);
             s.innerHTML = getTrueNumber(secs);
-
+        
             return remainingTime;
         }
+
 
         function initCountdown() {
             const interval = setInterval(() => {
